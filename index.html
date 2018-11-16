@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html land = "en">
+    <head>
+        <meta charset="utf-8">
+        <title> Average Price of an Eighth</title>
+        <script type="text/javascript" src="d3.js"></script>
+        <style  type= "text/css">
+
+            body {
+                background-color: gray;
+            }
+            svg{
+                background-color:white;
+            }
+            .axis path,
+            .axis line {
+                fill: none;
+                stroke: black;
+                shape-rendering: crispEdges;
+            }
+            .axis text {
+                font-family: sans-serif;
+                font-size: 12px;
+            }
+           
+            
+            
+        </style>
+    </head>
+    <body>
+           
+        <script type= "text/javascript">
+
+            //set width and height for visualization
+            var w = 1200;
+            var h = 600;
+            var padding= 40;
+          
+            
+            //create an array with the data. This method sucks, but will do for now. Ideally, we want
+            //to pull from a csv so we don't have to do this manually.
+            var dataset = [
+                {
+                   // city: "Bakersfield",
+                   // state: "CA",
+                    x: 1,
+                    y:33.76 ,
+                    r: 4,
+                    color:"crimson"
+                },
+                {
+                   // city: "San Bernardino",
+                   // state: "CA",
+                    x: 2,
+                    y: 35.58,
+                    r: 6,
+                    color: "crimson"
+                },
+                {    
+                   // city: "Van Nuys",
+                   // state: "CA",
+                    x: 3,
+                    y: 36.2,
+                    r: 6,
+                    color: "crimson"
+                },    
+                {
+                   // city:"Los Angeles",
+                    //state:"CA",
+                    x: 4,
+                    y: 37.46,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                    //city: "Los Angeles",
+                   // state: "CA",
+                    x: 5,
+                    y: 37.46,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                    //city: "Anaheim",
+                   // state: "CA",
+                    x: 6,
+                    y: 38.02,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                   // city: "Garden Grove",
+                   // state: "CA",
+                    x: 7,
+                    y: 38.35,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                   // city: "Riverside",
+                   // state: "CA",
+                    x: 8,
+                    y: 38.55,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                   // city: "Santa Ana",
+                   // state:"CA",
+                    x: 9,
+                    y: 38.71,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                   // city: "North Hollywood",
+                   // state: "CA",
+                    x: 10,
+                    y: 38.85,
+                    r: 6,
+                    color: "crimson"
+                },                               
+                {
+                   // city:"Sacramento", 
+                    //state:"CA",
+                    x:11,
+                    y:41.08,
+                    r: 7,
+                    color: "crimson"
+                },
+                {
+                    //city:"Long Beach", 
+                    //state:"CA",
+                    x:12,
+                    y:42,
+                    r: 6,
+                    color: "crimson"
+                },
+                {
+                    //city:"Chula Vista",
+                    //state:"CA",
+                    x:13,
+                    y:44.03,
+                    r: 7,
+                    color: "crimson"
+                },
+                {   
+                    //city:"San Jose",
+                   // state:"CA",
+                    x:14,
+                    y:44.44,
+                    r: 7,
+                    color: "crimson"
+                },
+                {   
+                    //city:"El Cajon",
+                   // state:"CA",
+                    x:15,
+                    y:45.06,
+                    r: 7,
+                    color: "crimson"
+                },
+                {   
+                   // city:"San Francisco",
+                    //state:"CA",
+                    x:16,
+                    y:45.06,
+                    r: 8,
+                    color: "crimson"
+                },
+                {
+                    //city:"Vista",
+                    //state:"CA",
+                    x:17,
+                    y:45.71,
+                    r: 8,
+                    color: "crimson"
+                },
+                {   
+                   // city:"San Diego",
+                    //state:"CA",
+                    x:18,
+                    y:47.75,
+                    r: 8,
+                    color: "crimson"
+                },
+                {
+                   // city:"Denver",
+                   // state:"CO",
+                    x:19,
+                    y:29.06,
+                    r: 4,
+                    color: "sandybrown"
+                },
+                {
+                   // city:"Vancouver",
+                    //state:"INT",
+                    x:20,
+                    y: 29.34,
+                    r: 4,
+                    color: "indianred"
+                },                  
+                {
+                   // city:"Seattle",
+                   // state:"WA",
+                    x:21,
+                    y: 37.21,
+                    r: 6,
+                    color: "darkslategrey"
+                },
+                {
+                   // city:"Portland",
+                   // state:"OR",
+                    x:22,
+                    y:29.37,
+                    r: 4,
+                    color: "forestgreen"
+                },
+                {   
+                    //city:"Toronto",
+                    //state:"INT",
+                    x:23,
+                    y:35,
+                    r: 5,
+                    color: "indianred"
+                },
+                {    
+                   // city:"Detroit",
+                   // state:"MI",
+                    x:24,
+                    y:38.39,
+                    r: 6,
+                    color: "goldenrod"
+                },
+                {
+                   // city:"Washington",
+                   // state:"DC",
+                    x:25,
+                    y:59.29,
+                    r: 10,
+                    color:"brown"
+                },
+                {
+                    //city:"Las Vegas",
+                   // state:"NV",
+                    x:26,
+                    y:50.78,
+                    r: 9,
+                    color: "tomato"
+                },
+                {
+                   // city:"Anchorage",
+                   // state:"AK",
+                    x:27,
+                    y:53.9,
+                    r: 9,
+                    color: "steelblue"
+                }
+            ];
+            
+
+            //create scale functions
+            var xScale = d3.scale.linear()
+                                 .domain([0, d3.max(dataset, function(d){
+                                     return d.x + 1; // this confines viz to plot area, for whatever reason
+                                 })])
+                                 .range([w-25, 0]); //this confines viz, on the right side
+            var yScale = d3.scale.linear()
+                                .domain([0, d3.max(dataset, function(d){
+                                    return d.y;
+                                })])
+                                .range([h, 0]);
+            //define x and y axis
+            var xAxis  =d3.svg.axis()
+                              .scale(xScale)
+                              .orient("bottom")
+                              .ticks(0);
+
+            var yAxis = d3.svg.axis()
+                              .scale(yScale)
+                              .orient("left")
+                              .ticks(7);
+            
+
+
+            //create svg element. Tell d3 where in the HTML to add the svg, and then tell it to "paste" it.
+            var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+            //now tell d3 to add circles (that don't exist yet) to this new svg
+                svg.selectAll("circle")
+                   .data(dataset)
+                   .enter()
+                   .append("circle")
+                   .attr("cx", w/2)
+                   .attr("cy", h/2)
+                   .attr("r", 1)
+                   .transition()
+                   .duration(1500)
+                   .attr("cx", function(d){
+                       return xScale(d.x- .5);
+                   })
+                   .attr("cy", function(d){
+                       return yScale(d.y - 2.5)
+                   })
+                   .attr("r", function(d){
+                       return d.r;
+                   })
+                   .attr("fill", function(d){
+                       return d.color;
+                   })
+                   //add a tooltip
+                   //define a function for the event handler. 
+                   //tag on a div to hold the tooltip
+                   //define it as 0 opacity and make it .9 
+                   //as it mouses over.
+
+
+                   //////////////
+
+                //draw the x-axis
+                svg.append("g")
+                   .attr("class","x axis")
+                   .attr("transform", "translate(0," + (h - padding + 5)+")")
+                   .call(xAxis);
+
+                //now draw the y-axis
+                svg.append("g")
+                   .attr("class", "y axis")
+                   .attr("transform","translate("+ (padding - 5) + ",0)")
+                   .call(yAxis);
+        </script>
+    </body>
+</html>
